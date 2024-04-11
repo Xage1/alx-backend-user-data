@@ -1,4 +1,4 @@
-https://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https://#!/usr/bin/env python3
+#!/usr/bin/env python3
 """ Use of regex in replacing occurrences of certain field values """
 import re
 from typing import List
