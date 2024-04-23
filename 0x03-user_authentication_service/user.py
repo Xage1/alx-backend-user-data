@@ -10,7 +10,9 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-
+"""
+User class
+"""
 class User(Base):
     __tablename__ = 'users'
 
