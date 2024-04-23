@@ -10,10 +10,11 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-"""
-User class
-"""
+
 class User(Base):
+"""
+Class creating the  initial user
+"""
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
