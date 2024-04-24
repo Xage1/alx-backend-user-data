@@ -7,6 +7,8 @@ Task 2 for database
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 from user import Base, User
 
 
@@ -38,3 +40,26 @@ class DB:
         self._session.add(new_user)
         self._session.commit()
         return new_user
+
+    def find_user_by(self, **kwargs) -> User:
+        """
+        Find a user by the provided criteria
+        """
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+            if user is None:
+                raise NoResultFound
+            return user
+        except InvalidRequestError:
+            raise
+
+    def update_user(self, user_id: int, hashed_password: str) -> None:
+        """
+        Updates a user's password
+        """
+        try:
+            user = self._session.query(User).filter_by(id=user_id).one()
+            user.hashed_password = hashed_password
+            self._session.commit()
+        except NoResultsFound:
+            raise ValueError("User not found")
