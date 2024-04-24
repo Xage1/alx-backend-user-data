@@ -9,6 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import Base, User
 
+
 class DB:
     """DB class
     """
@@ -37,4 +38,3 @@ class DB:
         self._session.add(new_user)
         self._session.commit()
         return new_user
-
