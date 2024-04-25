@@ -7,6 +7,7 @@ Hashed password Task
 import bcrypt
 from user import User
 from db import DB
+from sqlalchemy.orm.exc import NoResultFound
 
 
 def _hash_password(password: str) -> bytes:
@@ -44,3 +45,14 @@ class Auth:
                     hashed_password=hashed_password
             )
             return new_user
+    def valid_login(self, email: str, password: str) -> bool:
+        try:
+            user = self._db.find_user_by(email=email)
+            if user is not None:
+                pass_bytes = password.encode('utf-8')
+                hashed_password = user.hashed_password
+                if bcrypt.checkpw(pass_bytes, hashed_password):
+                    return True
+        except NoResultFound:
+            return False
+        return False
